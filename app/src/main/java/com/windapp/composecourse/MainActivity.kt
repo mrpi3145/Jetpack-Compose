@@ -3,16 +3,12 @@ package com.windapp.composecourse
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.runtime.*
@@ -35,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.windapp.composecourse.ui.theme.ComposeCourseTheme
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class MainActivity : ComponentActivity() {
@@ -43,52 +40,32 @@ class MainActivity : ComponentActivity() {
 
         setContent {
 
-        Column(Modifier.fillMaxSize()) {
+            LazyColumn{
+                itemsIndexed(
+                    listOf("this","is","jetpack","compose")
+                ){
+                    index,string ->
 
-            val color= remember {
-                mutableStateOf(Color.Yellow)
+                    Text(
+                        text=string,
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 24.dp)
+                    )
+
+                }
             }
 
-            ColorBox(
-                Modifier.weight(1f).fillMaxSize()
-            ){
-                color.value=it
-            }
-
-            Box(modifier = Modifier
-                .background(color.value)
-                .weight(1f)
-                .fillMaxSize())
 
 
-        }
         }
     }
 
 
-    @Composable
-    fun ColorBox(modifier: Modifier=Modifier,
-                updateColor:(Color)->Unit
-                 ){
 
-
-
-        Box(modifier = modifier
-            .background(Color.Red)
-            .clickable {
-            updateColor(
-               Color(
-                    Random.nextFloat(),
-                    Random.nextFloat(),
-                    Random.nextFloat(),
-                    1f
-                )
-            )
-            }
-        )
-
-
-    }
 
 }
 
